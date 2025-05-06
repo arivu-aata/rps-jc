@@ -11,7 +11,7 @@ import org.junit.jupiter.params.provider.ValueSource;
 class RPSJavaConsoleTest {
 
 	@ParameterizedTest
-	@ValueSource(strings = { "ra", "a", "ble was" })
+	@ValueSource(strings = { "ra", "a", "ble was", "s " })
 	void invalidInputTerminatesPlay(String input) {
 		// Create a ByteArrayOutputStream to capture the output
 		ByteArrayOutputStream baos = new ByteArrayOutputStream();

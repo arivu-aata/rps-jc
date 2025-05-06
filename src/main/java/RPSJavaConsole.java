@@ -7,7 +7,7 @@ public class RPSJavaConsole {
 
 	public static void main(String[] args) {
 		try(Scanner scanner = new Scanner(System.in)) {
-			String input = scanner.next();
+			String input = scanner.nextLine();
 			
 			if (isInvalid(input)) {
 				System.out.print("Invalid Input! Terminating Play...");

@@ -3,7 +3,7 @@ import java.util.Set;
 
 public class RPSJavaConsole {
 
-	private static Set<Character> validInput = Set.of('r', 'p', 's');
+	private static final Set<Character> validInput = Set.of('r', 'p', 's');
 
 	public static void main(String[] args) {
 		try(Scanner scanner = new Scanner(System.in)) {

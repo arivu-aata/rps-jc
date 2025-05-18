@@ -1,5 +1,4 @@
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.fail;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -66,18 +65,11 @@ class RPSJavaConsoleTest {
 			mockedAI.when(RPSAI::move).thenReturn(aiMove);
 			
 			RPSJavaConsole.main(null);
-
-			System.setIn(oldIn);
-			System.setOut(oldOut);
 			
 			mockedAI.verify(RPSAI::move);
-		} catch(Exception e) {
+		} finally {
 			System.setIn(oldIn);
 			System.setOut(oldOut);
-			
-			e.printStackTrace();
-			
-			fail(e.getMessage());
 		}
 		
 		List<String> sysoutLines = baos.toString().lines().toList();

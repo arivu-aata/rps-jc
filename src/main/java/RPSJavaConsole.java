@@ -7,7 +7,7 @@ public class RPSJavaConsole {
 
 	public static class OUTPUT_TYPE {
 
-		public static final String INVALID_PLAYER_INPUT = "invalid_player_input";
+		public static final String INVALID_PLAYER_INPUT_AND_PLAY_TERMINATION = "invalid_player_input_and_play_termination";
 		public static final String WINNER = "winner";
 		public static final String INVALID_AI_MOVE = "invalid_ai_move";
 
@@ -27,8 +27,7 @@ public class RPSJavaConsole {
 		String input = takeInput(INPUT_TYPE.PLAYER_INPUT);
 
 		if (isInvalid(input)) {
-			String output = "Invalid Player Input! Terminating Play...";
-			writeOutput(output, OUTPUT_TYPE.INVALID_PLAYER_INPUT);
+			writeOutput(null, OUTPUT_TYPE.INVALID_PLAYER_INPUT_AND_PLAY_TERMINATION);
 			return;
 		}
 
@@ -37,19 +36,21 @@ public class RPSJavaConsole {
 
 		String winner = determineWinner(playerMove, aiMove);
 
-		String output = "winner: " + winner;
-		writeOutput(output, OUTPUT_TYPE.WINNER);
+		writeOutput(winner, OUTPUT_TYPE.WINNER);
 	}
 
-	private static void writeOutput(String output, String outputType) {
+	private static void writeOutput(Object outputInfo, String outputType) {
 		switch (outputType) {
-		case OUTPUT_TYPE.INVALID_PLAYER_INPUT:
+		case OUTPUT_TYPE.INVALID_PLAYER_INPUT_AND_PLAY_TERMINATION:
+			System.out.print("Invalid Player Input! Terminating Play...");
+			break;
 		case OUTPUT_TYPE.WINNER:
-			System.out.print(output);
+			System.out.print("winner: " + outputInfo);
 			break;
 		case OUTPUT_TYPE.INVALID_AI_MOVE:
+			System.out.println("Invalid AI Move: " + outputInfo);
+			break;
 		default:
-			System.out.println(output);
 			break;
 		}
 	}
@@ -73,8 +74,7 @@ public class RPSJavaConsole {
 		case 's':
 			return playerMove == 'r' ? PLAYER : AI;
 		default:
-			String output = "Invalid AI Move: " + aiMove;
-			writeOutput(output, OUTPUT_TYPE.INVALID_AI_MOVE);
+			writeOutput(aiMove, OUTPUT_TYPE.INVALID_AI_MOVE);
 			return PLAYER;
 		}
 	}

@@ -7,14 +7,15 @@ public class RPSJavaConsole {
 
 	public static class OUTPUT_TYPE {
 
-		public static final String PRINT_TO_STDOUT = "print_to_stdout";
-		public static final String PRINTLN_TO_STDOUT = "println_to_stdout";
+		public static final String INVALID_PLAYER_INPUT = "invalid_player_input";
+		public static final String WINNER = "winner";
+		public static final String INVALID_AI_MOVE = "invalid_ai_move";
 
 	}
 
 	public static class INPUT_TYPE {
 
-		public static final String READ_LINE_FROM_STDIN = "read_line_from_stdin";
+		public static final String PLAYER_INPUT = "player_input";
 
 	}
 
@@ -23,11 +24,11 @@ public class RPSJavaConsole {
 	static final Set<Character> validInput = Set.of('r', 'p', 's');
 
 	public static void main(String[] args) {
-		String input = takeInput(INPUT_TYPE.READ_LINE_FROM_STDIN);
+		String input = takeInput(INPUT_TYPE.PLAYER_INPUT);
 
 		if (isInvalid(input)) {
 			String output = "Invalid Input! Terminating Play...";
-			writeOutput(output, OUTPUT_TYPE.PRINT_TO_STDOUT);
+			writeOutput(output, OUTPUT_TYPE.INVALID_PLAYER_INPUT);
 			return;
 		}
 
@@ -37,15 +38,16 @@ public class RPSJavaConsole {
 		String winner = determineWinner(playerMove, aiMove);
 
 		String output = "winner: " + winner;
-		writeOutput(output, OUTPUT_TYPE.PRINT_TO_STDOUT);
+		writeOutput(output, OUTPUT_TYPE.WINNER);
 	}
 
 	private static void writeOutput(String output, String outputType) {
 		switch (outputType) {
-		case OUTPUT_TYPE.PRINT_TO_STDOUT:
+		case OUTPUT_TYPE.INVALID_PLAYER_INPUT:
+		case OUTPUT_TYPE.WINNER:
 			System.out.print(output);
 			break;
-		case OUTPUT_TYPE.PRINTLN_TO_STDOUT:
+		case OUTPUT_TYPE.INVALID_AI_MOVE:
 		default:
 			System.out.println(output);
 			break;
@@ -54,7 +56,7 @@ public class RPSJavaConsole {
 
 	private static String takeInput(String inputType) {
 		switch (inputType) {
-		case INPUT_TYPE.READ_LINE_FROM_STDIN:
+		case INPUT_TYPE.PLAYER_INPUT:
 		default:
 			try (Scanner scanner = new Scanner(System.in)) {
 				return scanner.nextLine();
@@ -72,7 +74,7 @@ public class RPSJavaConsole {
 			return playerMove == 'r' ? PLAYER : AI;
 		default:
 			String output = "Invalid AI Move: " + aiMove;
-			writeOutput(output, OUTPUT_TYPE.PRINTLN_TO_STDOUT);
+			writeOutput(output, OUTPUT_TYPE.INVALID_AI_MOVE);
 			return PLAYER;
 		}
 	}

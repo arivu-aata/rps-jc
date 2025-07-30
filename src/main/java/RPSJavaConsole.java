@@ -5,6 +5,13 @@ import org.arivuaata.rps.RPSAI;
 
 public class RPSJavaConsole {
 
+	public static class OUTPUT_TYPE {
+
+		public static final String PRINT_TO_STDOUT = "print_to_stdout";
+		public static final String PRINTLN_TO_STDOUT = "println_to_stdout";
+
+	}
+
 	public static class INPUT_TYPE {
 
 		public static final String READ_LINE_FROM_STDIN = "read_line_from_stdin";
@@ -19,7 +26,8 @@ public class RPSJavaConsole {
 		String input = takeInput(INPUT_TYPE.READ_LINE_FROM_STDIN);
 
 		if (isInvalid(input)) {
-			System.out.print("Invalid Input! Terminating Play...");
+			String output = "Invalid Input! Terminating Play...";
+			writeOutput(output, OUTPUT_TYPE.PRINT_TO_STDOUT);
 			return;
 		}
 
@@ -28,8 +36,20 @@ public class RPSJavaConsole {
 
 		String winner = determineWinner(playerMove, aiMove);
 
-		System.out.print("winner: " + winner);
+		String output = "winner: " + winner;
+		writeOutput(output, OUTPUT_TYPE.PRINT_TO_STDOUT);
+	}
 
+	private static void writeOutput(String output, String outputType) {
+		switch (outputType) {
+		case OUTPUT_TYPE.PRINT_TO_STDOUT:
+			System.out.print(output);
+			break;
+		case OUTPUT_TYPE.PRINTLN_TO_STDOUT:
+		default:
+			System.out.println(output);
+			break;
+		}
 	}
 
 	private static String takeInput(String inputType) {
@@ -51,7 +71,8 @@ public class RPSJavaConsole {
 		case 's':
 			return playerMove == 'r' ? PLAYER : AI;
 		default:
-			System.out.println("Invalid AI Move: " + aiMove);
+			String output = "Invalid AI Move: " + aiMove;
+			writeOutput(output, OUTPUT_TYPE.PRINTLN_TO_STDOUT);
 			return PLAYER;
 		}
 	}

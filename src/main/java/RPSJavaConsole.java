@@ -10,21 +10,22 @@ public class RPSJavaConsole {
 	static final Set<Character> validInput = Set.of('r', 'p', 's');
 
 	public static void main(String[] args) {
+		String input;
 		try(Scanner scanner = new Scanner(System.in)) {
-			String input = scanner.nextLine();
-			
-			if (isInvalid(input)) {
-				System.out.print("Invalid Input! Terminating Play...");
-				return;
-			}
-			
-			char playerMove = input.charAt(0);
-			char aiMove = RPSAI.move();
-			
-			String winner = determineWinner(playerMove, aiMove);
-			
-			System.out.print("winner: " + winner);
+			input = scanner.nextLine();
 		}
+		
+		if (isInvalid(input)) {
+			System.out.print("Invalid Input! Terminating Play...");
+			return;
+		}
+		
+		char playerMove = input.charAt(0);
+		char aiMove = RPSAI.move();
+		
+		String winner = determineWinner(playerMove, aiMove);
+		
+		System.out.print("winner: " + winner);
 		
 	}
 

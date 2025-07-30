@@ -27,7 +27,7 @@ public class RPSJavaConsole {
 		String input = takeInput(INPUT_TYPE.PLAYER_INPUT);
 
 		if (isInvalid(input)) {
-			String output = "Invalid Input! Terminating Play...";
+			String output = "Invalid Player Input! Terminating Play...";
 			writeOutput(output, OUTPUT_TYPE.INVALID_PLAYER_INPUT);
 			return;
 		}

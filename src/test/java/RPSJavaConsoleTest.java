@@ -35,7 +35,7 @@ class RPSJavaConsoleTest {
 		System.setIn(oldIn);
 		System.setOut(oldOut);
 
-		assertEquals("Invalid Input! Terminating Play...", baos.toString());
+		assertEquals("Invalid Player Input! Terminating Play...", baos.toString());
 	}
 
 	@ParameterizedTest

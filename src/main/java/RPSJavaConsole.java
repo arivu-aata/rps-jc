@@ -21,6 +21,7 @@ public class RPSJavaConsole {
 
 	private static final String PLAYER = "player";
 	private static final String AI = "ai";
+	private static final String DRAW = "draw";
 	static final Set<Character> validInput = Set.of('r', 'p', 's');
 
 	public static void main(String[] args) {
@@ -68,11 +69,11 @@ public class RPSJavaConsole {
 	private static String determineWinner(char playerMove, char aiMove) {
 		switch (aiMove) {
 		case 'r':
-			return playerMove == 'p' ? PLAYER : AI;
+			return playerMove == 'p' ? PLAYER : playerMove == 's' ? AI : DRAW;
 		case 'p':
-			return playerMove == 's' ? PLAYER : AI;
+			return playerMove == 's' ? PLAYER : playerMove == 'r' ? AI : DRAW;
 		case 's':
-			return playerMove == 'r' ? PLAYER : AI;
+			return playerMove == 'r' ? PLAYER : playerMove == 'p' ? AI : DRAW;
 		default:
 			writeOutput(aiMove, OUTPUT_TYPE.INVALID_AI_MOVE);
 			return PLAYER;

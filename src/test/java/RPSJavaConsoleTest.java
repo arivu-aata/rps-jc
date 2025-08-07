@@ -40,10 +40,13 @@ class RPSJavaConsoleTest {
 
 	@ParameterizedTest
 	@CsvSource({
+		"r, r, draw",
 		"r, p, ai",
 		"r, s, player",
+		"p, p, draw",
 		"p, s, ai",
 		"p, r, player",
+		"s, s, draw",
 		"s, r, ai",
 		"s, p, player",
 		"r, 0, player"

@@ -35,14 +35,12 @@ public class RPSJavaConsole {
 		char playerMove = input.charAt(0);
 		char aiMove = RPSAI.move();
 
-		String winner = DRAW;
+		String winner;
 		try {
 			winner = determineWinner(playerMove, aiMove);
 		} catch (IllegalArgumentException e) {
-			if (e.getMessage().startsWith(OUTPUT_TYPE.INVALID_AI_MOVE)) {
-				writeOutput(aiMove, OUTPUT_TYPE.INVALID_AI_MOVE);
-				winner = PLAYER;
-			}
+			writeOutput(aiMove, OUTPUT_TYPE.INVALID_AI_MOVE);
+			winner = PLAYER;
 		}
 
 		writeOutput(winner, OUTPUT_TYPE.WINNER);
@@ -83,7 +81,7 @@ public class RPSJavaConsole {
 		case 's':
 			return playerMove == 'r' ? PLAYER : playerMove == 'p' ? AI : DRAW;
 		default:
-			throw new IllegalArgumentException(OUTPUT_TYPE.INVALID_AI_MOVE + " : " + aiMove);
+			throw new IllegalArgumentException();
 		}
 	}
 

@@ -25,7 +25,7 @@ public class RPSJavaConsole {
 	static final Set<Character> validInput = Set.of('r', 'p', 's');
 
 	public static void main(String[] args) {
-		String input = takeInput(INPUT_TYPE.PLAYER_INPUT);
+		String input = (String) takeInput(INPUT_TYPE.PLAYER_INPUT);
 
 		if (isInvalid(input)) {
 			writeOutput(null, OUTPUT_TYPE.INVALID_PLAYER_INPUT_AND_PLAY_TERMINATION);
@@ -62,7 +62,7 @@ public class RPSJavaConsole {
 		}
 	}
 
-	private static String takeInput(String inputType) {
+	private static Object takeInput(String inputType) {
 		switch (inputType) {
 		case INPUT_TYPE.PLAYER_INPUT:
 		default:

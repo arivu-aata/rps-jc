@@ -7,6 +7,7 @@ import java.io.PrintStream;
 import java.util.List;
 
 import org.arivuaata.rps.RPSAI;
+import org.arivuaata.rps.RPSPlayer;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.ValueSource;
@@ -77,7 +78,7 @@ class RPSJavaConsoleTest {
 		
 		List<String> sysoutLines = baos.toString().lines().toList();
 		
-		if (RPSJavaConsole.validInput.contains(aiMove)) {
+		if (RPSPlayer.validInput.contains(aiMove)) {
 			assertEquals(1, sysoutLines.size());
 		} else {
 			assertEquals(2, sysoutLines.size());

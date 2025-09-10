@@ -11,7 +11,7 @@ public class RPSJavaConsole implements IOHandler {
 		new RPSPlayer(getIOHandler()).play();
 	}
 
-	private static RPSJavaConsole getIOHandler() {
+	private static IOHandler getIOHandler() {
 		return new RPSJavaConsole();
 	}
 

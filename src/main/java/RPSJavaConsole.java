@@ -1,6 +1,6 @@
 import java.util.Scanner;
 
-import org.arivuaata.IOHandler;
+import org.arivuaata.io.IOHandler;
 import org.arivuaata.rps.RPSPlayer;
 
 import static org.arivuaata.rps.RPSPlayer.*;

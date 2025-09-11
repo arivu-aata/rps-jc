@@ -2,7 +2,7 @@ package org.arivuaata.rps;
 
 import java.util.Set;
 
-import org.arivuaata.IOHandler;
+import org.arivuaata.io.IOHandler;
 
 public class RPSPlayer {
 

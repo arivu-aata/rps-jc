@@ -1,4 +1,4 @@
-package org.arivuaata;
+package org.arivuaata.io;
 
 public interface IOHandler {
 

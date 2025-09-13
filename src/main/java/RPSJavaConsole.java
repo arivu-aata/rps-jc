@@ -18,8 +18,9 @@ public class RPSJavaConsole implements IOHandler {
 	@Override
 	public void writeOutput(Object outputInfo, String outputType) {
 		switch (outputType) {
-		case OUTPUT_TYPE.INVALID_PLAYER_INPUT_AND_PLAY_TERMINATION:
-			System.out.print("Invalid Player Input! Terminating Play...");
+		case OUTPUT_TYPE.ILLEGAL_STATE_AND_PLAY_TERMINATION:
+			System.out.print(String.format(
+				"Illegal State | %s | Terminating Play...", outputInfo));
 			break;
 		case OUTPUT_TYPE.WINNER:
 			System.out.print("winner: " + outputInfo);

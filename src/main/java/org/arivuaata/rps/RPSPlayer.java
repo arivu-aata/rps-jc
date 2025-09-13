@@ -14,7 +14,7 @@ public class RPSPlayer {
 
 	public static class OUTPUT_TYPE {
 	
-		public static final String INVALID_PLAYER_INPUT_AND_PLAY_TERMINATION = "invalid_player_input_and_play_termination";
+		public static final String ILLEGAL_STATE_AND_PLAY_TERMINATION = "illegal_state_and_play_termination";
 		public static final String WINNER = "winner";
 		public static final String INVALID_AI_MOVE = "invalid_ai_move";
 	
@@ -62,7 +62,7 @@ public class RPSPlayer {
 		try {
 			playerMove = this.getMove();
 		} catch (IllegalStateException e) {
-			ioHandler.writeOutput(null, OUTPUT_TYPE.INVALID_PLAYER_INPUT_AND_PLAY_TERMINATION);
+			ioHandler.writeOutput(e.getMessage(), OUTPUT_TYPE.ILLEGAL_STATE_AND_PLAY_TERMINATION);
 			return;
 		}
 	

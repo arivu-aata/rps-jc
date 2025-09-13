@@ -1,3 +1,5 @@
+package org.arivuaata.rpsjc;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.io.ByteArrayInputStream;
@@ -36,24 +38,13 @@ class RPSJavaConsoleTest {
 		System.setIn(oldIn);
 		System.setOut(oldOut);
 
-		assertEquals(String.format(
-				"Illegal State | invalid player input - %s | Terminating Play...", input),
+		assertEquals(String.format("Illegal State | invalid player input - %s | Terminating Play...", input),
 				baos.toString());
 	}
 
 	@ParameterizedTest
-	@CsvSource({
-		"r, r, draw",
-		"r, p, ai",
-		"r, s, player",
-		"p, p, draw",
-		"p, s, ai",
-		"p, r, player",
-		"s, s, draw",
-		"s, r, ai",
-		"s, p, player",
-		"r, 0, player"
-	})
+	@CsvSource({ "r, r, draw", "r, p, ai", "r, s, player", "p, p, draw", "p, s, ai", "p, r, player", "s, s, draw",
+			"s, r, ai", "s, p, player", "r, 0, player" })
 	void validPlayerMoveDeterminesWinner(char playerMove, char aiMove, String winner) {
 		// Create a ByteArrayOutputStream to capture the output
 		ByteArrayOutputStream baos = new ByteArrayOutputStream();
@@ -69,24 +60,24 @@ class RPSJavaConsoleTest {
 
 		try (MockedStatic<RPSAI> mockedAI = Mockito.mockStatic(RPSAI.class)) {
 			mockedAI.when(RPSAI::move).thenReturn(aiMove);
-			
+
 			RPSJavaConsole.main(null);
-			
+
 			mockedAI.verify(RPSAI::move);
 		} finally {
 			System.setIn(oldIn);
 			System.setOut(oldOut);
 		}
-		
+
 		List<String> sysoutLines = baos.toString().lines().toList();
-		
+
 		if (RPSPlayer.validInput.contains(aiMove)) {
 			assertEquals(1, sysoutLines.size());
 		} else {
 			assertEquals(2, sysoutLines.size());
 			assertEquals("Invalid AI Move: " + aiMove, sysoutLines.get(0));
 		}
-		
+
 		assertEquals("winner: " + winner, sysoutLines.getLast());
 	}
 }

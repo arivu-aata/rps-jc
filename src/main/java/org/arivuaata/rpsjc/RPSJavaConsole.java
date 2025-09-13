@@ -1,3 +1,5 @@
+package org.arivuaata.rpsjc;
+
 import java.util.Scanner;
 
 import org.arivuaata.io.IOHandler;
@@ -19,8 +21,7 @@ public class RPSJavaConsole implements IOHandler {
 	public void writeOutput(Object outputInfo, String outputType) {
 		switch (outputType) {
 		case OUTPUT_TYPE.ILLEGAL_STATE_AND_PLAY_TERMINATION:
-			System.out.print(String.format(
-				"Illegal State | %s | Terminating Play...", outputInfo));
+			System.out.print(String.format("Illegal State | %s | Terminating Play...", outputInfo));
 			break;
 		case OUTPUT_TYPE.WINNER:
 			System.out.print("winner: " + outputInfo);

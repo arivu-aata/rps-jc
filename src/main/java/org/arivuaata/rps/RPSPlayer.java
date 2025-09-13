@@ -38,12 +38,12 @@ public class RPSPlayer {
 		}
 	}
 
-	private static boolean isInvalid(String input) {
-		if (input.length() > 1) {
+	private static boolean isInvalid(String playerInput) {
+		if (playerInput.length() > 1) {
 			return true;
 		}
 	
-		char charInput = input.charAt(0);
+		char charInput = playerInput.charAt(0);
 		if (validInput.contains(charInput)) {
 			return false;
 		}
@@ -58,14 +58,14 @@ public class RPSPlayer {
 	}
 	
 	public void play() {
-		String input = (String) ioHandler.takeInput(INPUT_TYPE.PLAYER_INPUT);
-	
-		if (isInvalid(input)) {
+		char playerMove;
+		try {
+			playerMove = this.getMove();
+		} catch (IllegalStateException e) {
 			ioHandler.writeOutput(null, OUTPUT_TYPE.INVALID_PLAYER_INPUT_AND_PLAY_TERMINATION);
 			return;
 		}
 	
-		char playerMove = input.charAt(0);
 		char aiMove = RPSAI.move();
 	
 		String winner;
@@ -77,6 +77,16 @@ public class RPSPlayer {
 		}
 	
 		ioHandler.writeOutput(winner, OUTPUT_TYPE.WINNER);
+	}
+
+	public char getMove() {
+		String playerInput = (String) ioHandler.takeInput(INPUT_TYPE.PLAYER_INPUT);
+		
+		if (isInvalid(playerInput)) {
+			throw new IllegalStateException("invalid player input - " + playerInput);
+		}
+		
+		return playerInput.charAt(0);
 	}
 
 }

@@ -83,7 +83,7 @@ public class RPSPlayer {
 		String playerInput = (String) ioHandler.takeInput(INPUT_TYPE.PLAYER_INPUT);
 		
 		if (isInvalid(playerInput)) {
-			throw new IllegalStateException("invalid player input - " + playerInput);
+			throw new IllegalStateException(String.format("invalid player input - '%s'", playerInput));
 		}
 		
 		return playerInput.charAt(0);

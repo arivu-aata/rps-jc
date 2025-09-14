@@ -38,7 +38,7 @@ class RPSJavaConsoleTest {
 		System.setIn(oldIn);
 		System.setOut(oldOut);
 
-		assertEquals(String.format("Illegal State | invalid player input - %s | Terminating Play...", input),
+		assertEquals(String.format("Illegal State | invalid player input - '%s' | Terminating Play...", input),
 				baos.toString());
 	}
 

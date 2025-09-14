@@ -26,7 +26,8 @@ class RPSPlayerTest {
 	            "Expected getMove to throw IllegalStateException"
 	    );
 		
-		assertEquals(thrownException.getMessage(), "invalid player input - " + invalidInput);
+		assertEquals(thrownException.getMessage(),
+					String.format("invalid player input - '%s'", invalidInput));
 	}
 	
 	@ParameterizedTest

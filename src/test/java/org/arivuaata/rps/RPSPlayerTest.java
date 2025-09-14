@@ -13,7 +13,7 @@ import org.mockito.Mockito;
 class RPSPlayerTest {
 
 	@ParameterizedTest
-	@ValueSource(strings = { "ra", "a", "ble was", "s " })
+	@ValueSource(strings = { "ra", "a", "ble was", "s ", "" })
 	void getMoveThrowsIllegalStateExceptionOnInvalidPlayerInput(String invalidInput) {
 		IOHandler ioHandler = Mockito.mock();
 		RPSPlayer rpsPlayer = new RPSPlayer(ioHandler);

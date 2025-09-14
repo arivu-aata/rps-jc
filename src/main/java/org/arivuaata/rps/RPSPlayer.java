@@ -39,7 +39,7 @@ public class RPSPlayer {
 	}
 
 	private static boolean isInvalid(String playerInput) {
-		if (playerInput.length() > 1) {
+		if (playerInput.length() > 1 || playerInput.length() == 0) {
 			return true;
 		}
 	

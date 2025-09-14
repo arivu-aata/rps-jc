@@ -19,18 +19,18 @@ public class RPSJavaConsole implements IOHandler {
 
 	@Override
 	public void writeOutput(Object outputInfo, String outputType) {
+		System.out.println(getStringToOutput(outputInfo, outputType));
+	}
+
+	static String getStringToOutput(Object outputInfo, String outputType) {
 		switch (outputType) {
 		case OUTPUT_TYPE.ILLEGAL_STATE_AND_PLAY_TERMINATION:
-			System.out.print(String.format("Illegal State | %s | Terminating Play...", outputInfo));
-			break;
+			return String.format("Illegal State | %s | Terminating Play...", outputInfo);
 		case OUTPUT_TYPE.WINNER:
-			System.out.print("winner: " + outputInfo);
-			break;
+			return "winner: " + outputInfo;
 		case OUTPUT_TYPE.INVALID_AI_MOVE:
-			System.out.println("Invalid AI Move: " + outputInfo);
-			break;
-		default:
-			break;
+			return "Invalid AI Move: " + outputInfo;
+		default: throw new IllegalArgumentException("outputType: " + outputType);
 		}
 	}
 

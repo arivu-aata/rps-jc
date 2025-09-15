@@ -18,7 +18,7 @@ class RPSPlayerTest {
 		IOHandler ioHandler = Mockito.mock();
 		RPSPlayer rpsPlayer = new RPSPlayer(ioHandler);
 		
-		when(ioHandler.takeInput(INPUT_TYPE.PLAYER_INPUT)).thenReturn(invalidInput);
+		when(ioHandler.takeInput(INPUT_TYPE.PLAYER_INPUT.name())).thenReturn(invalidInput);
 		
 		IllegalStateException thrownException = assertThrows(
 				IllegalStateException.class,
@@ -36,7 +36,7 @@ class RPSPlayerTest {
 		IOHandler ioHandler = Mockito.mock();
 		RPSPlayer rpsPlayer = new RPSPlayer(ioHandler);
 		
-		when(ioHandler.takeInput(INPUT_TYPE.PLAYER_INPUT)).thenReturn(validInput);
+		when(ioHandler.takeInput(INPUT_TYPE.PLAYER_INPUT.name())).thenReturn(validInput);
 		
 		assertEquals(validInput.charAt(0), rpsPlayer.getMove());
 	}

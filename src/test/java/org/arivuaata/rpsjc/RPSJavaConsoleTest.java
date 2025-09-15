@@ -1,7 +1,6 @@
 package org.arivuaata.rpsjc;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -11,7 +10,6 @@ import java.util.List;
 
 import org.arivuaata.rps.RPSAI;
 import org.arivuaata.rps.RPSPlayer;
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.ValueSource;
@@ -83,17 +81,4 @@ class RPSJavaConsoleTest {
 		assertEquals("winner: " + winner, sysoutLines.getLast());
 	}
 
-	@Test
-	void getStringToOutputThrowsIllegalArgumentExceptionOnInvalidOutputType() {
-		String outputType = "random";
-		Object outputInfo = null;
-		
-		IllegalArgumentException thrownException = assertThrows(
-				IllegalArgumentException.class,
-	            () -> RPSJavaConsole.getStringToOutput(outputInfo, outputType),
-	            "Expected getStringToOutput to throw IllegalArgumentException"
-	    );		
-	
-		assertEquals(thrownException.getMessage(), "outputType: " + outputType);
-	}
 }

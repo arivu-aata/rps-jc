@@ -23,7 +23,7 @@ public class RPSJavaConsole implements IOHandler {
 	}
 
 	static String getStringToOutput(Object outputInfo, String outputType) {
-		switch (outputType) {
+		switch (OUTPUT_TYPE.valueOf(outputType)) {
 		case OUTPUT_TYPE.ILLEGAL_STATE_AND_PLAY_TERMINATION:
 			return String.format("Illegal State | %s | Terminating Play...", outputInfo);
 		case OUTPUT_TYPE.WINNER:
@@ -36,7 +36,7 @@ public class RPSJavaConsole implements IOHandler {
 
 	@Override
 	public Object takeInput(String inputType) {
-		switch (inputType) {
+		switch (INPUT_TYPE.valueOf(inputType)) {
 		case INPUT_TYPE.PLAYER_INPUT:
 		default:
 			try (Scanner scanner = new Scanner(System.in)) {

@@ -10,6 +10,7 @@ import java.util.List;
 
 import org.arivuaata.rps.RPSAI;
 import org.arivuaata.rps.RPSPlayer;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.ValueSource;
@@ -81,4 +82,21 @@ class RPSJavaConsoleTest {
 		assertEquals("winner: " + winner, sysoutLines.getLast());
 	}
 
+	@Test
+	void getStringToOutput_for_ILLEGAL_STATE_AND_PLAY_TERMINATION() {
+		assertEquals("Illegal State | someText | Terminating Play...",
+				RPSJavaConsole.getStringToOutput("someText", "ILLEGAL_STATE_AND_PLAY_TERMINATION"));
+	}
+	
+	@Test
+	void getStringToOutput_for_WINNER() {
+		assertEquals("winner: player",
+				RPSJavaConsole.getStringToOutput("player", "WINNER"));
+	}
+	
+	@Test
+	void getStringToOutput_for_INVALID_AI_MOVE() {
+		assertEquals("Invalid AI Move: i",
+				RPSJavaConsole.getStringToOutput('i', "INVALID_AI_MOVE"));
+	}
 }

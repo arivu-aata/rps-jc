@@ -99,4 +99,19 @@ class RPSJavaConsoleTest {
 		assertEquals("Invalid AI Move: i",
 				RPSJavaConsole.getStringToOutput('i', "INVALID_AI_MOVE"));
 	}
+	
+	@Test
+	void it_writeOutput_for_WINNER() {
+		ByteArrayOutputStream baos = new ByteArrayOutputStream();
+		PrintStream ps = new PrintStream(baos);
+
+		PrintStream oldOut = System.out;
+		System.setOut(ps);
+		
+		new RPSJavaConsole().writeOutput("player", "WINNER");
+		
+		System.setOut(oldOut);
+
+		assertEquals("winner: player", baos.toString().trim());
+	}
 }

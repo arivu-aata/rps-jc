@@ -1,6 +1,7 @@
 package org.arivuaata.rpsjc;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -113,5 +114,18 @@ class RPSJavaConsoleTest {
 		System.setOut(oldOut);
 
 		assertEquals("winner: player", baos.toString().trim());
+	}
+	
+	@ParameterizedTest
+	@ValueSource(strings = { "ra\n", "a\n", "ble was\n", "s \n", "\n" })
+	void takeInput_for_PLAYER_INPUT(String input) {
+		InputStream oldIn = System.in;
+		System.setIn(new ByteArrayInputStream(input.getBytes()));
+		
+		Object takenInput = new RPSJavaConsole().takeInput("PLAYER_INPUT");
+		
+		System.setIn(oldIn);
+
+		assertTrue(input.startsWith(takenInput.toString()));
 	}
 }

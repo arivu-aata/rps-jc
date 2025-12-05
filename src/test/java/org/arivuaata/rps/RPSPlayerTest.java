@@ -2,12 +2,18 @@ package org.arivuaata.rps;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.Mockito.doNothing;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.verifyNoMoreInteractions;
 import static org.mockito.Mockito.when;
 
 import org.arivuaata.io.IOHandler;
 import org.arivuaata.rps.RPSPlayer.INPUT_TYPE;
+import org.arivuaata.rps.RPSPlayer.OUTPUT_TYPE;
 import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.ValueSource;
+import org.mockito.MockedStatic;
 import org.mockito.Mockito;
 
 class RPSPlayerTest {
@@ -40,4 +46,33 @@ class RPSPlayerTest {
 		
 		assertEquals(validInput.charAt(0), rpsPlayer.getMove());
 	}
+	
+	@ParameterizedTest
+	@CsvSource({ "r, r, draw", "r, p, ai", "r, s, player", "p, p, draw", "p, s, ai", "p, r, player", "s, s, draw",
+		"s, r, ai", "s, p, player", "r, 0, player" })
+	void validPlayerInputDeterminesWinner(String validPlayerInput, char aiMove, String winner) {
+		IOHandler ioHandler = Mockito.mock();
+		
+		when(ioHandler.takeInput(INPUT_TYPE.PLAYER_INPUT.name())).thenReturn(validPlayerInput);
+		doNothing().when(ioHandler).writeOutput(aiMove, OUTPUT_TYPE.INVALID_AI_MOVE.name());
+		doNothing().when(ioHandler).writeOutput(winner, OUTPUT_TYPE.WINNER.name());
+		
+		try (MockedStatic<RPSAI> mockedAI = Mockito.mockStatic(RPSAI.class)) {
+			mockedAI.when(RPSAI::move).thenReturn(aiMove);
+			
+			new RPSPlayer(ioHandler).play();
+
+			mockedAI.verify(RPSAI::move);
+		}
+		
+		verify(ioHandler).takeInput(INPUT_TYPE.PLAYER_INPUT.name());
+		verify(ioHandler).writeOutput(winner, OUTPUT_TYPE.WINNER.name());
+		
+		if (!RPSPlayer.validInput.contains(aiMove)) {
+			verify(ioHandler).writeOutput(aiMove, OUTPUT_TYPE.INVALID_AI_MOVE.name());
+		}
+		
+		verifyNoMoreInteractions(ioHandler);
+	}
+	
 }

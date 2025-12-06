@@ -2,14 +2,18 @@ package org.arivuaata.rpsjc;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.params.provider.Arguments.arguments;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
 import java.io.PrintStream;
+import java.util.stream.Stream;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 import org.junit.jupiter.params.provider.ValueSource;
 
 class RPSJavaConsoleTest {
@@ -38,22 +42,21 @@ class RPSJavaConsoleTest {
 				baos.toString().trim());
 	}
 
-	@Test
-	void getStringToOutput_for_ILLEGAL_STATE_AND_PLAY_TERMINATION() {
-		assertEquals("Illegal State | someText | Terminating Play...",
-				RPSJavaConsole.getStringToOutput("someText", "ILLEGAL_STATE_AND_PLAY_TERMINATION"));
+	@ParameterizedTest
+	@MethodSource("getStringToOutputArgumentsProvider")
+	void getStringToOutput(String expected, Object outputInfo, String outputType) {
+		assertEquals(expected, RPSJavaConsole.getStringToOutput(outputInfo, outputType));
 	}
 	
-	@Test
-	void getStringToOutput_for_WINNER() {
-		assertEquals("winner: player",
-				RPSJavaConsole.getStringToOutput("player", "WINNER"));
-	}
-	
-	@Test
-	void getStringToOutput_for_INVALID_AI_MOVE() {
-		assertEquals("Invalid AI Move: i",
-				RPSJavaConsole.getStringToOutput('i', "INVALID_AI_MOVE"));
+	static Stream<Arguments> getStringToOutputArgumentsProvider() {
+		return Stream.of(
+			arguments("Illegal State | someText | Terminating Play...",
+					"someText", "ILLEGAL_STATE_AND_PLAY_TERMINATION"),
+			arguments("winner: player",
+					"player", "WINNER"),
+			arguments("Invalid AI Move: i",
+					'i', "INVALID_AI_MOVE")
+		);
 	}
 	
 	@Test

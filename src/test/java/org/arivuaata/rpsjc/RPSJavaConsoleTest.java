@@ -16,7 +16,7 @@ class RPSJavaConsoleTest {
 
 	@ParameterizedTest
 	@ValueSource(strings = { "ra", "a", "ble was", "s " })
-	void invalidInputTerminatesPlay(String input) {
+	void it_invalidPlayerInputTerminatesPlay(String playerInput) {
 		// Create a ByteArrayOutputStream to capture the output
 		ByteArrayOutputStream baos = new ByteArrayOutputStream();
 		PrintStream ps = new PrintStream(baos);
@@ -27,14 +27,14 @@ class RPSJavaConsoleTest {
 
 		// Set-up test stdin
 		InputStream oldIn = System.in;
-		System.setIn(new ByteArrayInputStream(input.getBytes()));
+		System.setIn(new ByteArrayInputStream(playerInput.getBytes()));
 
 		RPSJavaConsole.main(null);
 
 		System.setIn(oldIn);
 		System.setOut(oldOut);
 
-		assertEquals(String.format("Illegal State | invalid player input - '%s' | Terminating Play...", input),
+		assertEquals(String.format("Illegal State | invalid player input - '%s' | Terminating Play...", playerInput),
 				baos.toString().trim());
 	}
 

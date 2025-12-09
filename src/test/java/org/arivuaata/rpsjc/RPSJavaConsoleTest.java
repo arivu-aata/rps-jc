@@ -38,8 +38,8 @@ class RPSJavaConsoleTest {
 		System.setIn(oldIn);
 		System.setOut(oldOut);
 
-		assertEquals(String.format("Illegal State | invalid player input - '%s' | Terminating Play...", playerInput),
-				baos.toString().trim());
+		assertTrue(baos.toString().trim().endsWith(
+				String.format("Illegal State | invalid player input - '%s' | Terminating Play...", playerInput)));
 	}
 
 	@ParameterizedTest
@@ -50,6 +50,8 @@ class RPSJavaConsoleTest {
 	
 	static Stream<Arguments> getStringToOutputArgumentsProvider() {
 		return Stream.of(
+			arguments("Enter Player Input",
+					null, "PLAYER_INPUT_PROMPT"),
 			arguments("Illegal State | someText | Terminating Play...",
 					"someText", "ILLEGAL_STATE_AND_PLAY_TERMINATION"),
 			arguments("winner: player",

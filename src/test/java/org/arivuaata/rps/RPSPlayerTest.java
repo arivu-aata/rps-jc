@@ -24,6 +24,7 @@ class RPSPlayerTest {
 		IOHandler ioHandler = Mockito.mock();
 		RPSPlayer rpsPlayer = new RPSPlayer(ioHandler);
 		
+		doNothing().when(ioHandler).writeOutput(null, OUTPUT_TYPE.PLAYER_INPUT_PROMPT.name());
 		when(ioHandler.takeInput(INPUT_TYPE.PLAYER_INPUT.name())).thenReturn(invalidInput);
 		
 		IllegalStateException thrownException = assertThrows(
@@ -34,6 +35,10 @@ class RPSPlayerTest {
 		
 		assertEquals(thrownException.getMessage(),
 					String.format("invalid player input - '%s'", invalidInput));
+		
+		verify(ioHandler).writeOutput(null, OUTPUT_TYPE.PLAYER_INPUT_PROMPT.name());
+		verify(ioHandler).takeInput(INPUT_TYPE.PLAYER_INPUT.name());
+		verifyNoMoreInteractions(ioHandler);
 	}
 	
 	@ParameterizedTest
@@ -42,9 +47,14 @@ class RPSPlayerTest {
 		IOHandler ioHandler = Mockito.mock();
 		RPSPlayer rpsPlayer = new RPSPlayer(ioHandler);
 		
+		doNothing().when(ioHandler).writeOutput(null, OUTPUT_TYPE.PLAYER_INPUT_PROMPT.name());
 		when(ioHandler.takeInput(INPUT_TYPE.PLAYER_INPUT.name())).thenReturn(validInput);
 		
 		assertEquals(validInput.charAt(0), rpsPlayer.getMove());
+		
+		verify(ioHandler).writeOutput(null, OUTPUT_TYPE.PLAYER_INPUT_PROMPT.name());
+		verify(ioHandler).takeInput(INPUT_TYPE.PLAYER_INPUT.name());
+		verifyNoMoreInteractions(ioHandler);
 	}
 	
 	@ParameterizedTest
@@ -53,6 +63,7 @@ class RPSPlayerTest {
 	void validPlayerInputDeterminesWinner(String validPlayerInput, char aiMove, String winner) {
 		IOHandler ioHandler = Mockito.mock();
 		
+		doNothing().when(ioHandler).writeOutput(null, OUTPUT_TYPE.PLAYER_INPUT_PROMPT.name());
 		when(ioHandler.takeInput(INPUT_TYPE.PLAYER_INPUT.name())).thenReturn(validPlayerInput);
 		doNothing().when(ioHandler).writeOutput(aiMove, OUTPUT_TYPE.INVALID_AI_MOVE.name());
 		doNothing().when(ioHandler).writeOutput(winner, OUTPUT_TYPE.WINNER.name());
@@ -65,12 +76,14 @@ class RPSPlayerTest {
 			mockedAI.verify(RPSAI::move);
 		}
 		
+		verify(ioHandler).writeOutput(null, OUTPUT_TYPE.PLAYER_INPUT_PROMPT.name());
 		verify(ioHandler).takeInput(INPUT_TYPE.PLAYER_INPUT.name());
-		verify(ioHandler).writeOutput(winner, OUTPUT_TYPE.WINNER.name());
 		
 		if (!RPSPlayer.validInput.contains(aiMove)) {
 			verify(ioHandler).writeOutput(aiMove, OUTPUT_TYPE.INVALID_AI_MOVE.name());
 		}
+
+		verify(ioHandler).writeOutput(winner, OUTPUT_TYPE.WINNER.name());
 		
 		verifyNoMoreInteractions(ioHandler);
 	}

@@ -24,6 +24,8 @@ public class RPSJavaConsole implements IOHandler {
 
 	static String getStringToOutput(Object outputInfo, String outputType) {
 		switch (OUTPUT_TYPE.valueOf(outputType)) {
+		case OUTPUT_TYPE.PLAYER_INPUT_PROMPT:
+			return "Enter Player Input";
 		case OUTPUT_TYPE.ILLEGAL_STATE_AND_PLAY_TERMINATION:
 			return String.format("Illegal State | %s | Terminating Play...", outputInfo);
 		case OUTPUT_TYPE.WINNER:

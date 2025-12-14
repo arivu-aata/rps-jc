@@ -13,7 +13,7 @@ public class RPSPlayer {
 	public enum OUTPUT_TYPE {
 		ILLEGAL_STATE_AND_PLAY_TERMINATION,
 		WINNER,
-		INVALID_AI_MOVE, PLAYER_INPUT_PROMPT;
+		INVALID_AI_MOVE, PLAYER_INPUT_PROMPT, AI_MOVE;
 	}
 
 	private static final String PLAYER = "player";
@@ -63,6 +63,7 @@ public class RPSPlayer {
 		}
 	
 		char aiMove = RPSAI.getMove();
+		ioHandler.writeOutput(aiMove, OUTPUT_TYPE.AI_MOVE.name());
 	
 		String winner;
 		try {

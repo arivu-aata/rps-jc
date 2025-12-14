@@ -28,6 +28,8 @@ public class RPSJavaConsole implements IOHandler {
 			return "Enter Player Input";
 		case OUTPUT_TYPE.ILLEGAL_STATE_AND_PLAY_TERMINATION:
 			return String.format("Illegal State | %s | Terminating Play...", outputInfo);
+		case OUTPUT_TYPE.AI_MOVE:
+			return "AI Move: " + outputInfo;
 		case OUTPUT_TYPE.WINNER:
 			return "winner: " + outputInfo;
 		case OUTPUT_TYPE.INVALID_AI_MOVE:

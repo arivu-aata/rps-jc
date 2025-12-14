@@ -54,6 +54,8 @@ class RPSJavaConsoleTest {
 					null, "PLAYER_INPUT_PROMPT"),
 			arguments("Illegal State | someText | Terminating Play...",
 					"someText", "ILLEGAL_STATE_AND_PLAY_TERMINATION"),
+			arguments("AI Move: r",
+					'r', "AI_MOVE"),
 			arguments("winner: player",
 					"player", "WINNER"),
 			arguments("Invalid AI Move: i",

@@ -62,7 +62,7 @@ public class RPSPlayer {
 			return;
 		}
 	
-		char aiMove = RPSAI.move();
+		char aiMove = RPSAI.getMove();
 	
 		String winner;
 		try {

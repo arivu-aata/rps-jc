@@ -69,11 +69,11 @@ class RPSPlayerTest {
 		doNothing().when(ioHandler).writeOutput(winner, OUTPUT_TYPE.WINNER.name());
 		
 		try (MockedStatic<RPSAI> mockedAI = Mockito.mockStatic(RPSAI.class)) {
-			mockedAI.when(RPSAI::move).thenReturn(aiMove);
+			mockedAI.when(RPSAI::getMove).thenReturn(aiMove);
 			
 			new RPSPlayer(ioHandler).play();
 
-			mockedAI.verify(RPSAI::move);
+			mockedAI.verify(RPSAI::getMove);
 		}
 		
 		verify(ioHandler).writeOutput(null, OUTPUT_TYPE.PLAYER_INPUT_PROMPT.name());

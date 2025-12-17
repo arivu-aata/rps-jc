@@ -24,15 +24,15 @@ public class RPSJavaConsole implements IOHandler {
 
 	static String getStringToOutput(Object outputInfo, String outputType) {
 		switch (OUTPUT_TYPE.valueOf(outputType)) {
-		case OUTPUT_TYPE.PLAYER_INPUT_PROMPT:
+		case PLAYER_INPUT_PROMPT:
 			return "Enter Player Input";
-		case OUTPUT_TYPE.ILLEGAL_STATE_AND_PLAY_TERMINATION:
+		case ILLEGAL_STATE_AND_PLAY_TERMINATION:
 			return String.format("Illegal State | %s | Terminating Play...", outputInfo);
-		case OUTPUT_TYPE.AI_MOVE:
+		case AI_MOVE:
 			return "AI Move: " + outputInfo;
-		case OUTPUT_TYPE.WINNER:
+		case WINNER:
 			return "winner: " + outputInfo;
-		case OUTPUT_TYPE.INVALID_AI_MOVE:
+		case INVALID_AI_MOVE:
 			return "Invalid AI Move: " + outputInfo;
 		default: throw new IllegalArgumentException("outputType: " + outputType);
 		}
@@ -41,7 +41,7 @@ public class RPSJavaConsole implements IOHandler {
 	@Override
 	public Object takeInput(String inputType) {
 		switch (INPUT_TYPE.valueOf(inputType)) {
-		case INPUT_TYPE.PLAYER_INPUT:
+		case PLAYER_INPUT:
 		default:
 			try (Scanner scanner = new Scanner(System.in)) {
 				return scanner.nextLine();

@@ -2,14 +2,18 @@ package org.arivuaata.rps;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoMoreInteractions;
 import static org.mockito.Mockito.when;
 
+import java.util.Arrays;
+
 import org.arivuaata.io.IOHandler;
 import org.arivuaata.rps.RPSPlayer.INPUT_TYPE;
 import org.arivuaata.rps.RPSPlayer.OUTPUT_TYPE;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.ValueSource;
@@ -18,10 +22,16 @@ import org.mockito.Mockito;
 
 class RPSPlayerTest {
 
+	@Test
+	void validInputSet() {
+		assertTrue(RPSPlayer.validInput.size() == 3);
+		assertTrue(RPSPlayer.validInput.containsAll(Arrays.asList('r', 'p', 's')));
+	}
+	
 	@ParameterizedTest
 	@ValueSource(strings = { "ra", "a", "ble was", "s ", "" })
 	void getMoveThrowsIllegalStateExceptionOnInvalidPlayerInput(String invalidInput) {
-		IOHandler ioHandler = Mockito.mock();
+		IOHandler ioHandler = Mockito.mock(IOHandler.class);
 		RPSPlayer rpsPlayer = new RPSPlayer(ioHandler);
 		
 		doNothing().when(ioHandler).writeOutput(null, OUTPUT_TYPE.PLAYER_INPUT_PROMPT.name());

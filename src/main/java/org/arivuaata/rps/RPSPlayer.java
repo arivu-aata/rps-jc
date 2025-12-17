@@ -1,5 +1,8 @@
 package org.arivuaata.rps;
 
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.HashSet;
 import java.util.Set;
 
 import org.arivuaata.io.IOHandler;
@@ -19,7 +22,12 @@ public class RPSPlayer {
 	private static final String PLAYER = "player";
 	private static final String AI = "ai";
 	private static final String DRAW = "draw";
-	public static final Set<Character> validInput = Set.of('r', 'p', 's');
+	public static final Set<Character> validInput = validInput();
+
+	private static Set<Character> validInput() {
+		return Collections.unmodifiableSet(new HashSet<Character>(Arrays.asList('r', 'p', 's')));
+//		return Set.of('r', 'p', 's');
+	}
 
 	private static String determineWinner(char playerMove, char aiMove) {
 		switch (aiMove) {

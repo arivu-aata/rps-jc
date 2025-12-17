@@ -31,7 +31,7 @@ class RPSPlayerTest {
 	@ParameterizedTest
 	@ValueSource(strings = { "ra", "a", "ble was", "s ", "" })
 	void getMoveThrowsIllegalStateExceptionOnInvalidPlayerInput(String invalidInput) {
-		IOHandler ioHandler = Mockito.mock(IOHandler.class);
+		IOHandler ioHandler = Mockito.mock();
 		RPSPlayer rpsPlayer = new RPSPlayer(ioHandler);
 		
 		doNothing().when(ioHandler).writeOutput(null, OUTPUT_TYPE.PLAYER_INPUT_PROMPT.name());

@@ -10,8 +10,7 @@ import org.arivuaata.io.IOHandler;
 public class RPSPlayer {
 
 	public enum ERROR_TYPE {
-		INVALID_AI_MOVE
-
+		INVALID_AI_MOVE, ILLEGAL_STATE_AND_PLAY_TERMINATION
 	}
 
 	public enum INPUT_TYPE {
@@ -19,9 +18,7 @@ public class RPSPlayer {
 	}
 
 	public enum OUTPUT_TYPE {
-		ILLEGAL_STATE_AND_PLAY_TERMINATION,
-		WINNER,
-		PLAYER_INPUT_PROMPT, AI_MOVE;
+		WINNER, PLAYER_INPUT_PROMPT, AI_MOVE;
 	}
 
 	private static final String PLAYER = "player";
@@ -51,33 +48,33 @@ public class RPSPlayer {
 		if (playerInput.length() > 1 || playerInput.length() == 0) {
 			return true;
 		}
-	
+
 		char charInput = playerInput.charAt(0);
 		if (validInput.contains(charInput)) {
 			return false;
 		}
-	
+
 		return true;
 	}
 
 	private final IOHandler ioHandler;
-	
+
 	public RPSPlayer(IOHandler ioHandler) {
 		this.ioHandler = ioHandler;
 	}
-	
+
 	public void play() {
 		char playerMove;
 		try {
 			playerMove = this.getMove();
 		} catch (IllegalStateException e) {
-			ioHandler.writeOutput(e.getMessage(), OUTPUT_TYPE.ILLEGAL_STATE_AND_PLAY_TERMINATION.name());
+			ioHandler.writeError(e.getMessage(), ERROR_TYPE.ILLEGAL_STATE_AND_PLAY_TERMINATION.name());
 			return;
 		}
-	
+
 		char aiMove = RPSAI.getMove();
 		ioHandler.writeOutput(aiMove, OUTPUT_TYPE.AI_MOVE.name());
-	
+
 		String winner;
 		try {
 			winner = determineWinner(playerMove, aiMove);
@@ -85,18 +82,18 @@ public class RPSPlayer {
 			ioHandler.writeError(aiMove, ERROR_TYPE.INVALID_AI_MOVE.name());
 			winner = PLAYER;
 		}
-	
+
 		ioHandler.writeOutput(winner, OUTPUT_TYPE.WINNER.name());
 	}
 
 	public char getMove() {
 		ioHandler.writeOutput(null, OUTPUT_TYPE.PLAYER_INPUT_PROMPT.name());
 		String playerInput = (String) ioHandler.takeInput(INPUT_TYPE.PLAYER_INPUT.name());
-		
+
 		if (isInvalid(playerInput)) {
 			throw new IllegalStateException(String.format("invalid player input - '%s'", playerInput));
 		}
-		
+
 		return playerInput.charAt(0);
 	}
 

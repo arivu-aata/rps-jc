@@ -27,8 +27,6 @@ public class RPSJavaConsole implements IOHandler {
 		switch (OUTPUT_TYPE.valueOf(outputType)) {
 		case PLAYER_INPUT_PROMPT:
 			return "Enter Player Input";
-		case ILLEGAL_STATE_AND_PLAY_TERMINATION:
-			return String.format("Illegal State | %s | Terminating Play...", outputInfo);
 		case AI_MOVE:
 			return "AI Move: " + outputInfo;
 		case WINNER:
@@ -44,8 +42,10 @@ public class RPSJavaConsole implements IOHandler {
 	
 	static String getStringToError(Object errorInfo, String errorType) {
 		switch (ERROR_TYPE.valueOf(errorType)) {
+		case ILLEGAL_STATE_AND_PLAY_TERMINATION:
+			return String.format("Illegal State | %s | Terminating Play...", errorInfo);
 		case INVALID_AI_MOVE:
-			 return "Invalid AI Move: " + errorInfo;
+			return "Invalid AI Move: " + errorInfo;
 		default: throw new IllegalArgumentException("errorType: " + errorType);
 		}
 	}

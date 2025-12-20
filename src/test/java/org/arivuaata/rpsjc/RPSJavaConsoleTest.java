@@ -24,12 +24,14 @@ class RPSJavaConsoleTest {
 		// Create a ByteArrayOutputStream to capture the output
 		ByteArrayOutputStream baos = new ByteArrayOutputStream();
 		PrintStream ps = new PrintStream(baos);
+		PrintStream outPs = new PrintStream(new ByteArrayOutputStream());
 
-		// Redirect standard output to the PrintStream
+		PrintStream oldErr = System.err;
+		System.setErr(ps);
+
 		PrintStream oldOut = System.out;
-		System.setOut(ps);
-
-		// Set-up test stdin
+		System.setOut(outPs);
+		
 		InputStream oldIn = System.in;
 		System.setIn(new ByteArrayInputStream(playerInput.getBytes()));
 
@@ -37,6 +39,7 @@ class RPSJavaConsoleTest {
 
 		System.setIn(oldIn);
 		System.setOut(oldOut);
+		System.setErr(oldErr);
 
 		assertTrue(baos.toString().trim().endsWith(
 				String.format("Illegal State | invalid player input - '%s' | Terminating Play...", playerInput)));
@@ -52,8 +55,6 @@ class RPSJavaConsoleTest {
 		return Stream.of(
 			arguments("Enter Player Input",
 					null, "PLAYER_INPUT_PROMPT"),
-			arguments("Illegal State | someText | Terminating Play...",
-					"someText", "ILLEGAL_STATE_AND_PLAY_TERMINATION"),
 			arguments("AI Move: r",
 					'r', "AI_MOVE"),
 			arguments("winner: player",
@@ -85,7 +86,9 @@ class RPSJavaConsoleTest {
 	static Stream<Arguments> getStringToErrorArgumentsProvider() {
 		return Stream.of(
 			arguments("Invalid AI Move: i",
-					'i', "INVALID_AI_MOVE")
+					'i', "INVALID_AI_MOVE"),
+			arguments("Illegal State | someText | Terminating Play...",
+					"someText", "ILLEGAL_STATE_AND_PLAY_TERMINATION")
 		);
 	}
 	

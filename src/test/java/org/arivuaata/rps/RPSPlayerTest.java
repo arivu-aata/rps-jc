@@ -11,6 +11,7 @@ import static org.mockito.Mockito.when;
 import java.util.Arrays;
 
 import org.arivuaata.io.IOHandler;
+import org.arivuaata.rps.RPSPlayer.ERROR_TYPE;
 import org.arivuaata.rps.RPSPlayer.INPUT_TYPE;
 import org.arivuaata.rps.RPSPlayer.OUTPUT_TYPE;
 import org.junit.jupiter.api.Test;
@@ -85,7 +86,7 @@ class RPSPlayerTest {
 		doNothing().when(ioHandler).writeOutput(null, OUTPUT_TYPE.PLAYER_INPUT_PROMPT.name());
 		when(ioHandler.takeInput(INPUT_TYPE.PLAYER_INPUT.name())).thenReturn(validPlayerInput);
 		doNothing().when(ioHandler).writeOutput(aiMove, OUTPUT_TYPE.AI_MOVE.name());
-		doNothing().when(ioHandler).writeOutput(aiMove, OUTPUT_TYPE.INVALID_AI_MOVE.name());
+		doNothing().when(ioHandler).writeError(aiMove, ERROR_TYPE.INVALID_AI_MOVE.name());
 		doNothing().when(ioHandler).writeOutput(winner, OUTPUT_TYPE.WINNER.name());
 		
 		try (MockedStatic<RPSAI> mockedAI = Mockito.mockStatic(RPSAI.class)) {
@@ -101,7 +102,7 @@ class RPSPlayerTest {
 		verify(ioHandler).writeOutput(aiMove, OUTPUT_TYPE.AI_MOVE.name());
 		
 		if (!RPSPlayer.validInput.contains(aiMove)) {
-			verify(ioHandler).writeOutput(aiMove, OUTPUT_TYPE.INVALID_AI_MOVE.name());
+			verify(ioHandler).writeError(aiMove, ERROR_TYPE.INVALID_AI_MOVE.name());
 		}
 
 		verify(ioHandler).writeOutput(winner, OUTPUT_TYPE.WINNER.name());

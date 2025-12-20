@@ -9,6 +9,11 @@ import org.arivuaata.io.IOHandler;
 
 public class RPSPlayer {
 
+	public enum ERROR_TYPE {
+		INVALID_AI_MOVE
+
+	}
+
 	public enum INPUT_TYPE {
 		PLAYER_INPUT;
 	}
@@ -77,7 +82,7 @@ public class RPSPlayer {
 		try {
 			winner = determineWinner(playerMove, aiMove);
 		} catch (IllegalArgumentException e) {
-			ioHandler.writeOutput(aiMove, OUTPUT_TYPE.INVALID_AI_MOVE.name());
+			ioHandler.writeError(aiMove, ERROR_TYPE.INVALID_AI_MOVE.name());
 			winner = PLAYER;
 		}
 	

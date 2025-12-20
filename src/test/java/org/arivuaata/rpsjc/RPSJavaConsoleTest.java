@@ -78,6 +78,25 @@ class RPSJavaConsoleTest {
 		assertEquals("winner: player", baos.toString().trim());
 	}
 	
+	@Test
+	void writeError_for_INVALID_AI_MOVE() {
+		ByteArrayOutputStream baos = new ByteArrayOutputStream();
+		PrintStream ps = new PrintStream(baos);
+
+		PrintStream oldErr = System.err;
+		System.setErr(ps);
+		
+		new RPSJavaConsole().writeError('i', "INVALID_AI_MOVE");
+		
+		System.setErr(oldErr);
+		
+		String errorOutput = baos.toString();
+		String trimmedErrorOutput = errorOutput.trim();
+		
+		assertTrue(trimmedErrorOutput.length() < errorOutput.length());
+		assertEquals("Invalid AI Move: i", trimmedErrorOutput);
+	}
+	
 	@ParameterizedTest
 	@ValueSource(strings = { "ra\n", "a\n", "ble was\n", "s \n", "\n" })
 	void takeInput_for_PLAYER_INPUT(String input) {

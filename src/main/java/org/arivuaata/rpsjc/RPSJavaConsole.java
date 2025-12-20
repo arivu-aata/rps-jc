@@ -4,6 +4,7 @@ import java.util.Scanner;
 
 import org.arivuaata.io.IOHandler;
 import org.arivuaata.rps.RPSPlayer;
+import org.arivuaata.rps.RPSPlayer.ERROR_TYPE;
 
 import static org.arivuaata.rps.RPSPlayer.*;
 
@@ -38,6 +39,18 @@ public class RPSJavaConsole implements IOHandler {
 		}
 	}
 
+	@Override
+	public void writeError(Object errorInfo, String errorType) {
+		// TODO Auto-generated method stub
+		String error = null;
+		switch (ERROR_TYPE.valueOf(errorType)) {
+		case INVALID_AI_MOVE:
+			 error = "Invalid AI Move: " + errorInfo;
+			 break;
+		}
+		System.err.println(error);
+	}
+	
 	@Override
 	public Object takeInput(String inputType) {
 		switch (INPUT_TYPE.valueOf(inputType)) {

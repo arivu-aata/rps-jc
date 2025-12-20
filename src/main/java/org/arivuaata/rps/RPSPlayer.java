@@ -22,7 +22,7 @@ public class RPSPlayer {
 	private static final String PLAYER = "player";
 	private static final String AI = "ai";
 	private static final String DRAW = "draw";
-	public static final Set<Character> validInput = validInput();
+	static final Set<Character> validInput = validInput();
 
 	private static Set<Character> validInput() {
 		return Collections.unmodifiableSet(new HashSet<Character>(Arrays.asList('r', 'p', 's')));

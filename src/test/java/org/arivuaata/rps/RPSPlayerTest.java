@@ -28,6 +28,15 @@ class RPSPlayerTest {
 		assertTrue(RPSPlayer.validInput.containsAll(Arrays.asList('r', 'p', 's')));
 	}
 	
+	@Test
+	void validInputSetIsUnmodifiable() {
+		assertThrows(
+			Exception.class,
+			() -> RPSPlayer.validInput.clear(),
+			"Expected clear validInput to throw some exception"
+		);
+	}
+	
 	@ParameterizedTest
 	@ValueSource(strings = { "ra", "a", "ble was", "s ", "" })
 	void getMoveThrowsIllegalStateExceptionOnInvalidPlayerInput(String invalidInput) {

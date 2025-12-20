@@ -33,22 +33,21 @@ public class RPSJavaConsole implements IOHandler {
 			return "AI Move: " + outputInfo;
 		case WINNER:
 			return "winner: " + outputInfo;
-		case INVALID_AI_MOVE:
-			return "Invalid AI Move: " + outputInfo;
 		default: throw new IllegalArgumentException("outputType: " + outputType);
 		}
 	}
 
 	@Override
 	public void writeError(Object errorInfo, String errorType) {
-		// TODO Auto-generated method stub
-		String error = null;
+		System.err.println(getStringToError(errorInfo, errorType));
+	}
+	
+	static String getStringToError(Object errorInfo, String errorType) {
 		switch (ERROR_TYPE.valueOf(errorType)) {
 		case INVALID_AI_MOVE:
-			 error = "Invalid AI Move: " + errorInfo;
-			 break;
+			 return "Invalid AI Move: " + errorInfo;
+		default: throw new IllegalArgumentException("errorType: " + errorType);
 		}
-		System.err.println(error);
 	}
 	
 	@Override

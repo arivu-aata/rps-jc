@@ -57,9 +57,7 @@ class RPSJavaConsoleTest {
 			arguments("AI Move: r",
 					'r', "AI_MOVE"),
 			arguments("winner: player",
-					"player", "WINNER"),
-			arguments("Invalid AI Move: i",
-					'i', "INVALID_AI_MOVE")
+					"player", "WINNER")
 		);
 	}
 	
@@ -76,6 +74,19 @@ class RPSJavaConsoleTest {
 		System.setOut(oldOut);
 
 		assertEquals("winner: player", baos.toString().trim());
+	}
+	
+	@ParameterizedTest
+	@MethodSource("getStringToErrorArgumentsProvider")
+	void getStringToError(String expected, Object errorInfo, String errorType) {
+		assertEquals(expected, RPSJavaConsole.getStringToError(errorInfo, errorType));
+	}
+	
+	static Stream<Arguments> getStringToErrorArgumentsProvider() {
+		return Stream.of(
+			arguments("Invalid AI Move: i",
+					'i', "INVALID_AI_MOVE")
+		);
 	}
 	
 	@Test

@@ -21,7 +21,7 @@ public class RPSPlayer {
 	public enum OUTPUT_TYPE {
 		ILLEGAL_STATE_AND_PLAY_TERMINATION,
 		WINNER,
-		INVALID_AI_MOVE, PLAYER_INPUT_PROMPT, AI_MOVE;
+		PLAYER_INPUT_PROMPT, AI_MOVE;
 	}
 
 	private static final String PLAYER = "player";

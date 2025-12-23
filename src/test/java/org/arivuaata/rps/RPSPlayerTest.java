@@ -3,7 +3,10 @@ package org.arivuaata.rps;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.doNothing;
+import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoMoreInteractions;
 import static org.mockito.Mockito.when;
@@ -84,7 +87,7 @@ class RPSPlayerTest {
 		IOHandler ioHandler = Mockito.mock();
 		
 		doNothing().when(ioHandler).writeOutput(null, OUTPUT_TYPE.PLAYER_INPUT_PROMPT.name());
-		when(ioHandler.takeInput(INPUT_TYPE.PLAYER_INPUT.name())).thenReturn(validPlayerInput);
+		when(ioHandler.takeInput(INPUT_TYPE.PLAYER_INPUT.name())).thenReturn(validPlayerInput, "EOI");
 		doNothing().when(ioHandler).writeOutput(aiMove, OUTPUT_TYPE.AI_MOVE.name());
 		doNothing().when(ioHandler).writeError(aiMove, ERROR_TYPE.INVALID_AI_MOVE.name());
 		doNothing().when(ioHandler).writeOutput(winner, OUTPUT_TYPE.WINNER.name());
@@ -97,8 +100,8 @@ class RPSPlayerTest {
 			mockedAI.verify(RPSAI::getMove);
 		}
 		
-		verify(ioHandler).writeOutput(null, OUTPUT_TYPE.PLAYER_INPUT_PROMPT.name());
-		verify(ioHandler).takeInput(INPUT_TYPE.PLAYER_INPUT.name());
+		verify(ioHandler, times(2)).writeOutput(null, OUTPUT_TYPE.PLAYER_INPUT_PROMPT.name());
+		verify(ioHandler, times(2)).takeInput(INPUT_TYPE.PLAYER_INPUT.name());
 		verify(ioHandler).writeOutput(aiMove, OUTPUT_TYPE.AI_MOVE.name());
 		
 		if (!RPSPlayer.validInput.contains(aiMove)) {
@@ -106,6 +109,8 @@ class RPSPlayerTest {
 		}
 
 		verify(ioHandler).writeOutput(winner, OUTPUT_TYPE.WINNER.name());
+		
+		verify(ioHandler).writeError(anyString(), eq(ERROR_TYPE.ILLEGAL_STATE_AND_PLAY_TERMINATION.name()));
 		
 		verifyNoMoreInteractions(ioHandler);
 	}

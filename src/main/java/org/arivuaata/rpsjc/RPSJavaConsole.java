@@ -10,6 +10,8 @@ import static org.arivuaata.rps.RPSPlayer.*;
 
 public class RPSJavaConsole implements IOHandler {
 
+	private final Scanner inputScanner;
+
 	public static void main(String[] args) {
 		new RPSPlayer(getIOHandler()).play();
 	}
@@ -18,6 +20,10 @@ public class RPSJavaConsole implements IOHandler {
 		return new RPSJavaConsole();
 	}
 
+	public RPSJavaConsole() {
+		inputScanner = new Scanner(System.in);
+	}
+	
 	@Override
 	public void writeOutput(Object outputInfo, String outputType) {
 		System.out.println(getStringToOutput(outputInfo, outputType));
@@ -55,9 +61,7 @@ public class RPSJavaConsole implements IOHandler {
 		switch (INPUT_TYPE.valueOf(inputType)) {
 		case PLAYER_INPUT:
 		default:
-			try (Scanner scanner = new Scanner(System.in)) {
-				return scanner.nextLine();
-			}
+			return inputScanner.nextLine();
 		}
 	}
 

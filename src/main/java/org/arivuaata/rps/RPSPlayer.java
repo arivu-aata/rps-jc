@@ -64,26 +64,28 @@ public class RPSPlayer {
 	}
 
 	public void play() {
-		char playerMove;
-		try {
-			playerMove = this.getMove();
-		} catch (IllegalStateException e) {
-			ioHandler.writeError(e.getMessage(), ERROR_TYPE.ILLEGAL_STATE_AND_PLAY_TERMINATION.name());
-			return;
+		while (true) {
+			char playerMove;
+			try {
+				playerMove = this.getMove();
+			} catch (IllegalStateException e) {
+				ioHandler.writeError(e.getMessage(), ERROR_TYPE.ILLEGAL_STATE_AND_PLAY_TERMINATION.name());
+				return;
+			}
+			
+			char aiMove = RPSAI.getMove();
+			ioHandler.writeOutput(aiMove, OUTPUT_TYPE.AI_MOVE.name());
+			
+			String winner;
+			try {
+				winner = determineWinner(playerMove, aiMove);
+			} catch (IllegalArgumentException e) {
+				ioHandler.writeError(aiMove, ERROR_TYPE.INVALID_AI_MOVE.name());
+				winner = PLAYER;
+			}
+			
+			ioHandler.writeOutput(winner, OUTPUT_TYPE.WINNER.name());
 		}
-
-		char aiMove = RPSAI.getMove();
-		ioHandler.writeOutput(aiMove, OUTPUT_TYPE.AI_MOVE.name());
-
-		String winner;
-		try {
-			winner = determineWinner(playerMove, aiMove);
-		} catch (IllegalArgumentException e) {
-			ioHandler.writeError(aiMove, ERROR_TYPE.INVALID_AI_MOVE.name());
-			winner = PLAYER;
-		}
-
-		ioHandler.writeOutput(winner, OUTPUT_TYPE.WINNER.name());
 	}
 
 	public char getMove() {

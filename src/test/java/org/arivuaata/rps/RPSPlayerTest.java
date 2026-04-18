@@ -27,17 +27,17 @@ import org.mockito.Mockito;
 class RPSPlayerTest {
 
 	@Test
-	void validInputSet() {
-		assertTrue(RPSPlayer.validInput.size() == 3);
-		assertTrue(RPSPlayer.validInput.containsAll(Arrays.asList('r', 'p', 's')));
+	void validMovesSet() {
+		assertTrue(RPSPlayer.validMoves.size() == 3);
+		assertTrue(RPSPlayer.validMoves.containsAll(Arrays.asList('r', 'p', 's')));
 	}
 	
 	@Test
-	void validInputSetIsUnmodifiable() {
+	void validMovesSetIsUnmodifiable() {
 		assertThrows(
 			Exception.class,
-			() -> RPSPlayer.validInput.clear(),
-			"Expected clear validInput to throw some exception"
+			() -> RPSPlayer.validMoves.clear(),
+			"Expected clear validMoves to throw some exception"
 		);
 	}
 	
@@ -104,7 +104,7 @@ class RPSPlayerTest {
 		verify(ioHandler, times(2)).takeInput(INPUT_TYPE.PLAYER_INPUT.name());
 		verify(ioHandler).writeOutput(aiMove, OUTPUT_TYPE.AI_MOVE.name());
 		
-		if (!RPSPlayer.validInput.contains(aiMove)) {
+		if (!RPSPlayer.validMoves.contains(aiMove)) {
 			verify(ioHandler).writeError(aiMove, ERROR_TYPE.INVALID_AI_MOVE.name());
 		}
 

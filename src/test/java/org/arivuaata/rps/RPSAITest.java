@@ -9,7 +9,7 @@ class RPSAITest {
 	@Test
 	void testGetMove() {
 		char actualMove = RPSAI.getMove();
-		assertTrue(RPSPlayer.validInput.contains(actualMove));
+		assertTrue(RPSPlayer.validMoves.contains(actualMove));
 	}
 
 }

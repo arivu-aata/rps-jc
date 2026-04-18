@@ -3,9 +3,9 @@ package org.arivuaata.rps;
 public class RPSAI {
 
 	public static char getMove() {
-		int validInputSize = RPSPlayer.validInput.size();
-		int randomMoveNum = (int)(Math.random() * validInputSize);
-		return RPSPlayer.validInput.toArray(new Character[validInputSize])[randomMoveNum];
+		int validMovesSize = RPSPlayer.validMoves.size();
+		int randomMoveNum = (int)(Math.random() * validMovesSize);
+		return RPSPlayer.validMoves.toArray(new Character[validMovesSize])[randomMoveNum];
 	}
 
 }

@@ -24,9 +24,9 @@ public class RPSPlayer {
 	private static final String PLAYER = "player";
 	private static final String AI = "ai";
 	private static final String DRAW = "draw";
-	static final Set<Character> validInput = validInput();
+	static final Set<Character> validMoves = validMoves();
 
-	private static Set<Character> validInput() {
+	private static Set<Character> validMoves() {
 		return Collections.unmodifiableSet(new HashSet<Character>(Arrays.asList('r', 'p', 's')));
 //		return Set.of('r', 'p', 's');
 	}
@@ -50,7 +50,7 @@ public class RPSPlayer {
 		}
 
 		char charInput = playerInput.charAt(0);
-		if (validInput.contains(charInput)) {
+		if (validMoves.contains(charInput)) {
 			return false;
 		}
 

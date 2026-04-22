@@ -21,7 +21,6 @@ class RPSJavaConsoleTest {
 	@ParameterizedTest
 	@ValueSource(strings = { "ra", "a", "ble was", "s " })
 	void it_invalidPlayerInputTerminatesPlay(String playerInput) {
-		// Create a ByteArrayOutputStream to capture the output
 		ByteArrayOutputStream baos = new ByteArrayOutputStream();
 		PrintStream ps = new PrintStream(baos);
 		PrintStream outPs = new PrintStream(new ByteArrayOutputStream());

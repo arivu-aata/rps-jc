@@ -7,9 +7,10 @@ import org.junit.jupiter.api.Test;
 class RPSAITest {
 
 	@Test
-	void testGetMove() {
-		char actualMove = RPSAI.getMove();
-		assertTrue(RPSPlayer.validMoves.contains(actualMove));
+	void getMove() {
+		for (int i = 0; i < RPSPlayer.validMoves.size(); i++) {
+			assertTrue(RPSPlayer.validMoves.contains(RPSAI.getMove()));
+		}
 	}
 
 }

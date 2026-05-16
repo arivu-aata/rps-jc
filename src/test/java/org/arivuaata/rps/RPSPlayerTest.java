@@ -83,11 +83,11 @@ class RPSPlayerTest {
 	@ParameterizedTest
 	@CsvSource({ "r, r, draw", "r, p, ai", "r, s, player", "p, p, draw", "p, s, ai", "p, r, player", "s, s, draw",
 		"s, r, ai", "s, p, player", "r, 0, player" })
-	void validPlayerInputDeterminesWinner(String validPlayerInput, char aiMove, String winner) {
+	void playerInputAsValidMoveStringDeterminesWinner(String validPlayerMoveStr, char aiMove, String winner) {
 		IOHandler ioHandler = Mockito.mock();
 		
 		doNothing().when(ioHandler).writeOutput(null, OUTPUT_TYPE.PLAYER_INPUT_PROMPT.name());
-		when(ioHandler.takeInput(INPUT_TYPE.PLAYER_INPUT.name())).thenReturn(validPlayerInput, "EOI");
+		when(ioHandler.takeInput(INPUT_TYPE.PLAYER_INPUT.name())).thenReturn(validPlayerMoveStr, "EOI");
 		doNothing().when(ioHandler).writeOutput(aiMove, OUTPUT_TYPE.AI_MOVE.name());
 		doNothing().when(ioHandler).writeError(aiMove, ERROR_TYPE.INVALID_AI_MOVE.name());
 		doNothing().when(ioHandler).writeOutput(winner, OUTPUT_TYPE.WINNER.name());

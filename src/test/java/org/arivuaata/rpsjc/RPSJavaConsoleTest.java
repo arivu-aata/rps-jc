@@ -73,7 +73,11 @@ class RPSJavaConsoleTest {
 		
 		System.setOut(oldOut);
 
-		assertEquals("winner: player", baos.toString().trim());
+		String baosString = baos.toString();
+		String trimmedExpectedOutput = "winner: player";
+		
+		assertTrue(trimmedExpectedOutput.length() < baosString.length());
+		assertEquals(trimmedExpectedOutput, baosString.trim());
 	}
 	
 	@ParameterizedTest
@@ -92,7 +96,7 @@ class RPSJavaConsoleTest {
 	}
 	
 	@Test
-	void writeError_for_INVALID_AI_MOVE() {
+	void it_writeError_for_INVALID_AI_MOVE() {
 		ByteArrayOutputStream baos = new ByteArrayOutputStream();
 		PrintStream ps = new PrintStream(baos);
 

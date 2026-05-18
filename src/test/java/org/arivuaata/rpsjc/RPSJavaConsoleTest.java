@@ -22,11 +22,11 @@ class RPSJavaConsoleTest {
 	@ValueSource(strings = { "ra", "a", "ble was", "s " })
 	void it_invalidPlayerInputTerminatesPlay(String playerInput) {
 		ByteArrayOutputStream baos = new ByteArrayOutputStream();
-		PrintStream ps = new PrintStream(baos);
+		PrintStream errPs = new PrintStream(baos);
 		PrintStream outPs = new PrintStream(new ByteArrayOutputStream());
 
 		PrintStream oldErr = System.err;
-		System.setErr(ps);
+		System.setErr(errPs);
 
 		PrintStream oldOut = System.out;
 		System.setOut(outPs);

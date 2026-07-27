@@ -48,7 +48,8 @@ class RPSJavaConsoleTest {
 	@Test
 	void getStringToOutput_throwsForUnsupportedOutputType() {
 		assertThrows(IllegalArgumentException.class,
-				() -> RPSJavaConsole.getStringToOutput("ignored", "UNKNOWN_OUTPUT"));
+				() -> RPSJavaConsole.getStringToOutput("ignored", "UNKNOWN_OUTPUT"),
+				"outputType: UNKNOWN_OUTPUT");
 	}
 
 	@ParameterizedTest
@@ -90,7 +91,8 @@ class RPSJavaConsoleTest {
 	@Test
 	void getStringToError_throwsForUnsupportedErrorType() {
 		assertThrows(IllegalArgumentException.class,
-				() -> RPSJavaConsole.getStringToError("ignored", "UNKNOWN_ERROR"));
+				() -> RPSJavaConsole.getStringToError("ignored", "UNKNOWN_ERROR"),
+				"errorType: UNKNOWN_ERROR");
 	}
 
 	@ParameterizedTest

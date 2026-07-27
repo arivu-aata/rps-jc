@@ -1,6 +1,7 @@
 package org.arivuaata.rpsjc;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.params.provider.Arguments.arguments;
 
@@ -44,6 +45,12 @@ class RPSJavaConsoleTest {
 				String.format("Illegal State | invalid player input - '%s' | Terminating Play...", playerInput)));
 	}
 
+	@Test
+	void getStringToOutput_throwsForUnsupportedOutputType() {
+		assertThrows(IllegalArgumentException.class,
+				() -> RPSJavaConsole.getStringToOutput("ignored", "UNKNOWN_OUTPUT"));
+	}
+
 	@ParameterizedTest
 	@MethodSource("getStringToOutputArgumentsProvider")
 	void getStringToOutput(String expected, Object outputInfo, String outputType) {
@@ -80,6 +87,12 @@ class RPSJavaConsoleTest {
 		assertEquals(trimmedExpectedOutput, baosString.trim());
 	}
 	
+	@Test
+	void getStringToError_throwsForUnsupportedErrorType() {
+		assertThrows(IllegalArgumentException.class,
+				() -> RPSJavaConsole.getStringToError("ignored", "UNKNOWN_ERROR"));
+	}
+
 	@ParameterizedTest
 	@MethodSource("getStringToErrorArgumentsProvider")
 	void getStringToError(String expected, Object errorInfo, String errorType) {

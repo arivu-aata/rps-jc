@@ -40,6 +40,22 @@ class RPSPlayerTest {
 			"Expected clear validMoves to throw some exception"
 		);
 	}
+
+	@Test
+	void playWritesErrorAndStopsWhenPlayerInputBecomesIllegalState() {
+		IOHandler ioHandler = Mockito.mock();
+		RPSPlayer rpsPlayer = new RPSPlayer(ioHandler);
+
+		doNothing().when(ioHandler).writeOutput(null, OUTPUT_TYPE.PLAYER_INPUT_PROMPT.name());
+		when(ioHandler.takeInput(INPUT_TYPE.PLAYER_INPUT.name())).thenReturn("invalid");
+
+		rpsPlayer.play();
+
+		verify(ioHandler).writeOutput(null, OUTPUT_TYPE.PLAYER_INPUT_PROMPT.name());
+		verify(ioHandler).takeInput(INPUT_TYPE.PLAYER_INPUT.name());
+		verify(ioHandler).writeError("invalid player input - 'invalid'", ERROR_TYPE.ILLEGAL_STATE_AND_PLAY_TERMINATION.name());
+		verifyNoMoreInteractions(ioHandler);
+	}
 	
 	@ParameterizedTest
 	@ValueSource(strings = { "ra", "a", "ble was", "s ", "" })
